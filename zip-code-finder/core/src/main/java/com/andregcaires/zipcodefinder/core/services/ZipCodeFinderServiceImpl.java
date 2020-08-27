@@ -30,11 +30,6 @@ public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
 		boolean found = false;
 		
 		zipCodeBuilder = new StringBuilder(zipCode);
-		var dashIndex = zipCodeBuilder.indexOf("-");
-		
-		if (dashIndex >= 0) {
-			zipCodeBuilder.replace(dashIndex, dashIndex, "");
-		}
 
 		if (zipCodeBuilder.length() != ZIP_CODE_LENGTH) {
 
@@ -60,19 +55,12 @@ public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
 		return null;
 	}
 	
-	public void removeDash() {
-		
-	}
-	
 	public boolean isHttpResponseAnErrorMessage(String responseBody) {
 		
 		return responseBody.contains("\"erro\": true");
 	}
 	
-	public void updatesCharacterWithZerosByLastIndex(StringBuilder stringBuilder, int indexFromRight) {
-		
-		stringBuilder.replace((ZIP_CODE_LENGTH - indexFromRight) -1, ZIP_CODE_LENGTH - indexFromRight, "0");
-	}
+
 
 	public HttpResponse<String> httpGet(String url) throws IOException, InterruptedException {
 

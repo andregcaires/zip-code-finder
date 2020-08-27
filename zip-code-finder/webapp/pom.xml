@@ -12,7 +12,7 @@
 	<artifactId>webapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>webapp</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Web layer for Zip Code Finder</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -26,6 +26,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.andregcaires.zipcodefinder</groupId>
+			<artifactId>core</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
