@@ -1,0 +1,12 @@
+TIPS
+
+
+
+https://stackoverflow.com/questions/22338176/spring-http-client
+
+
+https://openjdk.java.net/groups/net/httpclient/recipes.html
+
+
+
+java notification pattern
