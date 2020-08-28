@@ -50,6 +50,21 @@ public class ZipCodeFinderServiceTest {
 	}
 	
 	@Test
+	public void mustReturnErrorMessageDueToInvalidZipCode() throws IOException, InterruptedException {
+		
+		// given
+		var invalidJsonResponse = "{\"erro\": true}";
+		given(httpUtils.httpGetViaCep("ABC")).willReturn(invalidJsonResponse);
+		
+		// when
+		var result = zipCodeFinderService.findAddressByZipCode("ABC");
+		
+		// then
+		Assertions.assertNotNull(result.getError());
+		Assertions.assertEquals("CEP inválido", result.getError().getMessage());
+	}
+	
+	@Test
 	public void mustReturnErrorMessage() throws IOException, InterruptedException {
 		
 		// given
@@ -58,7 +73,7 @@ public class ZipCodeFinderServiceTest {
 		given(httpUtils.httpGetViaCep("12345670")).willReturn(invalidJsonResponse);
 		given(httpUtils.httpGetViaCep("12345600")).willReturn(invalidJsonResponse);
 		given(httpUtils.httpGetViaCep("12345000")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGetViaCep("12340000")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12340000")).willThrow(new IOException());
 		given(httpUtils.httpGetViaCep("12300000")).willReturn(invalidJsonResponse);
 		given(httpUtils.httpGetViaCep("12000000")).willReturn(invalidJsonResponse);
 		given(httpUtils.httpGetViaCep("10000000")).willReturn(invalidJsonResponse);
