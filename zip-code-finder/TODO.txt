@@ -11,6 +11,8 @@ Spring Cucumber
 
 TODO:
 
+- AUTENTICAÇÃO
+
 - BDD
 
 - TECHDOC (arquivos de documentação técnica por módulo)

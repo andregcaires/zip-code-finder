@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface HttpUtils {
 
-	String httpGet(String zipCode) throws IOException, InterruptedException;
+	String httpGetViaCep(String zipCode) throws IOException, InterruptedException;
 }

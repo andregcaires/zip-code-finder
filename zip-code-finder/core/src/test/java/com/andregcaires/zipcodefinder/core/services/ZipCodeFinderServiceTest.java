@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.andregcaires.zipcodefinder.core.dtos.AddressDto;
 import com.andregcaires.zipcodefinder.core.utils.HttpUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @SpringBootTest
 public class ZipCodeFinderServiceTest {
@@ -28,7 +29,7 @@ public class ZipCodeFinderServiceTest {
 		
 		// given
 		var validJsonResponse = "{\"cep\": \"14020-525\", \"logradouro\": \"Avenida Presidente Vargas\", \"complemento\": \"de 1701 a 2399 - lado ímpar\", \"bairro\": \"Jardim Santa Ângela\", \"localidade\": \"Ribeirão Preto\", \"uf\": \"SP\", \"ibge\": \"3543402\", \"gia\": \"5824\", \"ddd\": \"16\"}";
-		given(httpUtils.httpGet("14020525")).willReturn(validJsonResponse);
+		given(httpUtils.httpGetViaCep("14020525")).willReturn(validJsonResponse);
 		
 		// when
 		var result = zipCodeFinderService.findAddressByZipCode("14020525");
@@ -53,15 +54,15 @@ public class ZipCodeFinderServiceTest {
 		
 		// given
 		var invalidJsonResponse = "{\"erro\": true}";
-		given(httpUtils.httpGet("12345678")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("12345670")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("12345600")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("12345000")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("12340000")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("12300000")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("12000000")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("10000000")).willReturn(invalidJsonResponse);
-		given(httpUtils.httpGet("00000000")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12345678")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12345670")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12345600")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12345000")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12340000")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12300000")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("12000000")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("10000000")).willReturn(invalidJsonResponse);
+		given(httpUtils.httpGetViaCep("00000000")).willReturn(invalidJsonResponse);
 		
 		// when
 		var result = zipCodeFinderService.findAddressByZipCode("12345678");
@@ -88,18 +89,14 @@ public class ZipCodeFinderServiceTest {
 	}
 	
 	@Test
-	public void mustSerializeJsonStringIntoAddress() {
+	public void mustSerializeJsonStringIntoAddress() throws JsonMappingException, JsonProcessingException {
 		
 		// given
 		var validJsonResponse = "{\"cep\": \"14020-525\", \"logradouro\": \"Avenida Presidente Vargas\", \"complemento\": \"de 1701 a 2399 - lado ímpar\", \"bairro\": \"Jardim Santa Ângela\", \"localidade\": \"Ribeirão Preto\", \"uf\": \"SP\", \"ibge\": \"3543402\", \"gia\": \"5824\", \"ddd\": \"16\"}";
 		AddressDto address = null;
 		
 		// when
-		try {			
-			address = zipCodeFinderService.serializeJsonStringIntoAddress(validJsonResponse);
-		} catch (JsonProcessingException e) {
-			
-		}
+		address = zipCodeFinderService.serializeJsonStringIntoAddress(validJsonResponse);
 		
 		// then
 		Assertions.assertNotNull(address);

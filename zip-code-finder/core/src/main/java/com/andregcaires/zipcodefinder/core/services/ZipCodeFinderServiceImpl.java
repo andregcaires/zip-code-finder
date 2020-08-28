@@ -41,7 +41,7 @@ public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
 
 				try {
 
-					responseBody = httpUtils.httpGet(zipCode.getCurrent());
+					responseBody = httpUtils.httpGetViaCep(zipCode.getCurrent());
 
 					if (!isValidZipCodeResponse(responseBody)) {
 

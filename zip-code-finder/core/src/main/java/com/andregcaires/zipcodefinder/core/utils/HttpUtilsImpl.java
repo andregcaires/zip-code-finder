@@ -13,7 +13,7 @@ public class HttpUtilsImpl implements HttpUtils {
 	
 	private final String VIA_CEP_URL = "https://viacep.com.br/ws/%s/json/";
 
-	public String httpGet(String zipCode) throws IOException, InterruptedException {
+	public String httpGetViaCep(String zipCode) throws IOException, InterruptedException {
 
 		var httpClient = HttpClient.newHttpClient();
 		
