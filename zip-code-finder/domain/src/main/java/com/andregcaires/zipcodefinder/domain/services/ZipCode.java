@@ -51,7 +51,7 @@ public class ZipCode {
 		return this.valid;
 	}
 
-	public boolean isNumeric() {
+	private boolean isNumeric() {
 
 		try {
 
@@ -65,7 +65,7 @@ public class ZipCode {
 		return true;
 	}
 
-	public void removeDash() {
+	private void removeDash() {
 
 		var dashIndex = this.current.indexOf("-");
 

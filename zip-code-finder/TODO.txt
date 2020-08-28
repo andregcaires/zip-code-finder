@@ -1,0 +1,18 @@
+TIPS
+
+
+
+
+java notification pattern
+
+
+
+Spring Cucumber
+
+TODO:
+
+- BDD
+
+- TECHDOC (arquivos de documentação técnica por módulo)
+
+- Projeto com banco

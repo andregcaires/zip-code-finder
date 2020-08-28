@@ -1,6 +1,7 @@
 package com.andregcaires.zipcodefinder.webapp;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +13,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.andregcaires.zipcodefinder.core")
+@ComponentScan(basePackages = {"com.andregcaires.zipcodefinder.core", 
+		"com.andregcaires.zipcodefinder.webapp",
+		"com.andregcaires.zipcodefinder.webapp.configurations"})
 public class WebappApplication implements CommandLineRunner {
-	
+
 	@Autowired
 	private Environment environment;
 
@@ -31,16 +34,20 @@ public class WebappApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		StringBuilder logMessage = new StringBuilder();
-		logMessage.append("Please access ");
+		showLogMessage();
+	}
+	
+	public void showLogMessage() throws UnknownHostException {
 		
+		StringBuilder logMessage = new StringBuilder();
+
 		logMessage.append(HTTP_PREFIX);
 		logMessage.append(InetAddress.getLocalHost().getHostAddress());
 		logMessage.append(":");
 		logMessage.append(environment.getProperty("server.port"));
-		
-		logger.info(logMessage.toString() + SWAGGER_ENDPOINT + " for API documentation");
-		logger.info(logMessage.toString() + ACTUATOR_ENDPOINT + " for health check info");
+
+		logger.info("API documentation URI: " + logMessage.toString() + SWAGGER_ENDPOINT);
+		logger.info("Health check info URI: " + logMessage.toString() + ACTUATOR_ENDPOINT);
 	}
 
 }
