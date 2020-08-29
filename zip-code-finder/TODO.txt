@@ -13,8 +13,20 @@ TODO:
 
 - AUTENTICAÇÃO
 
+- Sonar
+
 - BDD
 
 - TECHDOC (arquivos de documentação técnica por módulo)
 
 - Projeto com banco
+
+
+
+8ae14fb70ddd9797714dc07c1e406bec00217731
+
+
+mvn sonar:sonar \
+  -Dsonar.projectKey=com.andregcaires.zipcodefinder \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=8ae14fb70ddd9797714dc07c1e406bec00217731

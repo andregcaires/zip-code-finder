@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class ZipCodeTest {
+class ZipCodeTest {
 
 	@Test
-	public void mustUpdateCharacterWithZerosByLastIndex() {
+	void mustUpdateCharacterWithZerosByLastIndex() {
 		
 		// given
 		var zipCode = ZipCode.createNewZipCode("14020525");
@@ -17,11 +17,11 @@ public class ZipCodeTest {
 		zipCode.updateCharacterWithZerosByLastIndex(0);
 		
 		// then
-		Assertions.assertEquals("14020520", zipCode.getCurrent());
+		Assertions.assertEquals("14020520", zipCode.toString());
 	}
 	
 	@Test
-	public void mustCreateValidZipCode() {
+	void mustCreateValidZipCode() {
 		
 		// given
 		String withoutDash = "14020525";
@@ -37,7 +37,7 @@ public class ZipCodeTest {
 	}
 	
 	@Test
-	public void mustCreateInvalidZipCode() {
+	void mustCreateInvalidZipCode() {
 		
 		// given
 		String nonNumeric = "ABCDEFGH";
@@ -59,7 +59,7 @@ public class ZipCodeTest {
 	}
 	
 	@Test
-	public void mustUpdateAllCharactersWithZeros() {
+	void mustUpdateAllCharactersWithZeros() {
 		
 		// given
 		var zipCode = ZipCode.createNewZipCode("99999999");
@@ -74,6 +74,6 @@ public class ZipCodeTest {
 		}
 		
 		// then
-		Assertions.assertEquals("00000000", zipCode.getCurrent());
+		Assertions.assertEquals("00000000", zipCode.toString());
 	}
 }

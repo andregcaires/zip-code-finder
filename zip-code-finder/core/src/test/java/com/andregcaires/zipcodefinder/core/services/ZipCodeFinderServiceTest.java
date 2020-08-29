@@ -16,7 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 @SpringBootTest
-public class ZipCodeFinderServiceTest {
+class ZipCodeFinderServiceTest {
 
 	@Autowired
 	private ZipCodeFinderServiceImpl zipCodeFinderService;
@@ -25,7 +25,7 @@ public class ZipCodeFinderServiceTest {
 	private HttpUtils httpUtils;
 	
 	@Test
-	public void mustFindAddressByZipCode() throws IOException, InterruptedException {
+	void mustFindAddressByZipCode() throws IOException, InterruptedException {
 		
 		// given
 		var validJsonResponse = "{\"cep\": \"14020-525\", \"logradouro\": \"Avenida Presidente Vargas\", \"complemento\": \"de 1701 a 2399 - lado ímpar\", \"bairro\": \"Jardim Santa Ângela\", \"localidade\": \"Ribeirão Preto\", \"uf\": \"SP\", \"ibge\": \"3543402\", \"gia\": \"5824\", \"ddd\": \"16\"}";
@@ -38,19 +38,14 @@ public class ZipCodeFinderServiceTest {
 		AddressDto address = result.getAddress();
 		
 		Assertions.assertNotNull(address);
-		Assertions.assertEquals("14020-525", address.getZipCode());
 		Assertions.assertEquals("Avenida Presidente Vargas", address.getStreet());
-		Assertions.assertEquals("de 1701 a 2399 - lado ímpar", address.getComplement());
 		Assertions.assertEquals("Jardim Santa Ângela", address.getNeighborhood());
 		Assertions.assertEquals("Ribeirão Preto", address.getCity());
 		Assertions.assertEquals("SP", address.getState());
-		Assertions.assertEquals("3543402", address.getIbge());
-		Assertions.assertEquals("5824", address.getGia());
-		Assertions.assertEquals("16", address.getDdd());	
 	}
 	
 	@Test
-	public void mustReturnErrorMessageDueToInvalidZipCode() throws IOException, InterruptedException {
+	void mustReturnErrorMessageDueToInvalidZipCode() throws IOException, InterruptedException {
 		
 		// given
 		var invalidJsonResponse = "{\"erro\": true}";
@@ -65,7 +60,7 @@ public class ZipCodeFinderServiceTest {
 	}
 	
 	@Test
-	public void mustReturnErrorMessage() throws IOException, InterruptedException {
+	void mustReturnErrorMessage() throws IOException, InterruptedException {
 		
 		// given
 		var invalidJsonResponse = "{\"erro\": true}";
@@ -88,7 +83,7 @@ public class ZipCodeFinderServiceTest {
 	}
 	
 	@Test
-	public void mustCheckIfResponseBodyIsValid() {
+	void mustCheckIfResponseBodyIsValid() {
 		
 		// given
 		var validJsonResponse = "{\"cep\": \"14020-525\", \"logradouro\": \"Avenida Presidente Vargas\", \"complemento\": \"de 1701 a 2399 - lado ímpar\", \"bairro\": \"Jardim Santa Ângela\", \"localidade\": \"Ribeirão Preto\", \"uf\": \"SP\", \"ibge\": \"3543402\", \"gia\": \"5824\", \"ddd\": \"16\"}";
@@ -104,7 +99,7 @@ public class ZipCodeFinderServiceTest {
 	}
 	
 	@Test
-	public void mustSerializeJsonStringIntoAddress() throws JsonMappingException, JsonProcessingException {
+	void mustSerializeJsonStringIntoAddress() throws JsonMappingException, JsonProcessingException {
 		
 		// given
 		var validJsonResponse = "{\"cep\": \"14020-525\", \"logradouro\": \"Avenida Presidente Vargas\", \"complemento\": \"de 1701 a 2399 - lado ímpar\", \"bairro\": \"Jardim Santa Ângela\", \"localidade\": \"Ribeirão Preto\", \"uf\": \"SP\", \"ibge\": \"3543402\", \"gia\": \"5824\", \"ddd\": \"16\"}";
@@ -115,14 +110,9 @@ public class ZipCodeFinderServiceTest {
 		
 		// then
 		Assertions.assertNotNull(address);
-		Assertions.assertEquals("14020-525", address.getZipCode());
 		Assertions.assertEquals("Avenida Presidente Vargas", address.getStreet());
-		Assertions.assertEquals("de 1701 a 2399 - lado ímpar", address.getComplement());
 		Assertions.assertEquals("Jardim Santa Ângela", address.getNeighborhood());
 		Assertions.assertEquals("Ribeirão Preto", address.getCity());
-		Assertions.assertEquals("SP", address.getState());
-		Assertions.assertEquals("3543402", address.getIbge());
-		Assertions.assertEquals("5824", address.getGia());
-		Assertions.assertEquals("16", address.getDdd());		
+		Assertions.assertEquals("SP", address.getState());	
 	}
 }

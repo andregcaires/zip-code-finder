@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class HttpUtilsImpl implements HttpUtils {
 	
-	private final String VIA_CEP_URL = "https://viacep.com.br/ws/%s/json/";
+	private static final String VIACEPURL = "https://viacep.com.br/ws/%s/json/";
 
 	public String httpGetViaCep(String zipCode) throws IOException, InterruptedException {
 
 		var httpClient = HttpClient.newHttpClient();
 		
-		var url = String.format(VIA_CEP_URL, zipCode);
+		var url = String.format(VIACEPURL, zipCode);
 		
 		var request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 

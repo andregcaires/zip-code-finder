@@ -4,7 +4,7 @@ public class ZipCode {
 
 	private StringBuilder current;
 
-	private final short ZIP_CODE_LENGTH = 8;
+	public static final short ZIPCODELENGTH = 8;
 
 	private boolean valid;
 
@@ -21,14 +21,14 @@ public class ZipCode {
 
 	public void updateCharacterWithZerosByLastIndex(int indexFromRight) {
 
-		this.current.replace((ZIP_CODE_LENGTH - indexFromRight) - 1, ZIP_CODE_LENGTH - indexFromRight, "0");
+		this.current.replace((ZIPCODELENGTH - indexFromRight) - 1, ZIPCODELENGTH - indexFromRight, "0");
 	}
 
 	private ZipCode validate() {
 
 		this.removeDash();
 
-		if (this.current.length() == ZIP_CODE_LENGTH && this.isNumeric()) {
+		if (this.current.length() == ZIPCODELENGTH && this.isNumeric()) {
 
 			this.valid = true;
 			
@@ -41,7 +41,8 @@ public class ZipCode {
 		return this;
 	}
 
-	public String getCurrent() {
+	@Override
+	public String toString() {
 
 		return this.current.toString();
 	}
@@ -55,7 +56,7 @@ public class ZipCode {
 
 		try {
 
-			Integer.parseInt(this.getCurrent());
+			Integer.parseInt(this.toString());
 
 		} catch (NumberFormatException err) {
 

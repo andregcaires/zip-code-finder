@@ -21,9 +21,9 @@ public class WebappApplication implements CommandLineRunner {
 	@Autowired
 	private Environment environment;
 
-	private final String SWAGGER_ENDPOINT = "/swagger-ui.html";
-	private final String ACTUATOR_ENDPOINT = "/actuator";
-	private final String HTTP_PREFIX = "http://";
+	private static final String SWAGGERENDPOINT = "/swagger-ui.html";
+	private static final String ACTUATORENDPOINT = "/actuator";
+	private static final String HTTPPREFIX = "http://";
 
 	Logger logger = LoggerFactory.getLogger(WebappApplication.class);
 
@@ -41,13 +41,13 @@ public class WebappApplication implements CommandLineRunner {
 		
 		StringBuilder logMessage = new StringBuilder();
 
-		logMessage.append(HTTP_PREFIX);
+		logMessage.append(HTTPPREFIX);
 		logMessage.append(InetAddress.getLocalHost().getHostAddress());
 		logMessage.append(":");
 		logMessage.append(environment.getProperty("server.port"));
 
-		logger.info("API documentation URI: " + logMessage.toString() + SWAGGER_ENDPOINT);
-		logger.info("Health check info URI: " + logMessage.toString() + ACTUATOR_ENDPOINT);
+		logger.info("API documentation URI: {}{}", logMessage, SWAGGERENDPOINT);
+		logger.info("Health check info URI: {}{}", logMessage, ACTUATORENDPOINT);
 	}
 
 }

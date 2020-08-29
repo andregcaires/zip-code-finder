@@ -1,7 +1,5 @@
 package com.andregcaires.zipcodefinder.core.services;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +11,10 @@ import com.andregcaires.zipcodefinder.core.dtos.ResultDto;
 import com.andregcaires.zipcodefinder.core.utils.HttpUtils;
 import com.andregcaires.zipcodefinder.domain.services.ZipCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
-
-	private final short ZIP_CODE_LENGTH = 8;
 
 	Logger logger = LoggerFactory.getLogger(ZipCodeFinderServiceImpl.class);
 	
@@ -37,11 +32,11 @@ public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
 			int index = 0;
 			String responseBody;
 
-			while (index != ZIP_CODE_LENGTH) {
+			while (index != ZipCode.ZIPCODELENGTH) {
 
 				try {
 
-					responseBody = httpUtils.httpGetViaCep(zipCode.getCurrent());
+					responseBody = httpUtils.httpGetViaCep(zipCode.toString());
 
 					if (!isValidZipCodeResponse(responseBody)) {
 
@@ -50,24 +45,24 @@ public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
 
 					} else {
 
-						logger.info("An address has been found: " + responseBody);
+						logger.info("An address has been found: {}", responseBody);
 
 						result.setAddress(serializeJsonStringIntoAddress(responseBody));
 						
 						break;
 					}
 
-				} catch (IOException | InterruptedException e) {
+				} catch (Exception e) {
 
-					logger.error("An error has ocurred when searching for Zip Code: " + zipCode.getCurrent() + " - "
-							+ e.getMessage());
+					logger.error("An error has ocurred when searching for Zip Code: {} - {}", zipCode,
+							e.getMessage());
 
 					index++;
 				}
 
 			}
 
-			if (index == ZIP_CODE_LENGTH) {
+			if (index == ZipCode.ZIPCODELENGTH) {
 
 				result.setError(new ErrorDto("CEP inválido"));
 			}
@@ -87,7 +82,7 @@ public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
 	}
 
 	public AddressDto serializeJsonStringIntoAddress(String jsonString)
-			throws JsonMappingException, JsonProcessingException {
+			throws JsonProcessingException {
 
 		return new ObjectMapper().readValue(jsonString, AddressDto.class);
 	}

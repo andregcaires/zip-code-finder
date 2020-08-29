@@ -17,7 +17,7 @@ import com.andregcaires.zipcodefinder.core.dtos.ResultDto;
 import com.andregcaires.zipcodefinder.core.services.ZipCodeFinderService;
 
 @WebMvcTest(ZipCodeResource.class)
-public class ZipCodeResourceTest {
+class ZipCodeResourceTest {
 
     @Autowired
     private MockMvc mvc;
@@ -32,13 +32,12 @@ public class ZipCodeResourceTest {
     	address.setNeighborhood("Bairro mockado");
     	address.setState("MOCK");
     	address.setStreet("Rua dos Mocks");
-    	address.setZipCode("12345678");
     	
     	return address;
     }
     
     @Test
-    public void musrFindValidAddress() throws Exception {
+    void mustFindValidAddress() throws Exception {
     	
     	AddressDto address = mockAddress();    	
     	ResultDto resultDto = new ResultDto();
@@ -52,15 +51,15 @@ public class ZipCodeResourceTest {
     }
     
     @Test
-    public void mustReturnErrorMessageFromService() throws Exception {
+    void mustReturnErrorMessageFromService() throws Exception {
     	
     	ErrorDto errorDto = new ErrorDto("CEP inválido");   	
     	ResultDto resultDto = new ResultDto();
     	resultDto.setError(errorDto);
     	
-    	given(zipCodeService.findAddressByZipCode("999999999")).willReturn(resultDto);
+    	given(zipCodeService.findAddressByZipCode("ABCDEFGH")).willReturn(resultDto);
     	
-        mvc.perform(get("/zipcode/999999999/viacep")
+        mvc.perform(get("/zipcode/ABCDEFGH/viacep")
         	      .contentType(MediaType.APPLICATION_JSON))
         	      .andExpect(status().isBadRequest());
     }

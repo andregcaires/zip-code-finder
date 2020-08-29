@@ -10,13 +10,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.pgssoft.httpclient.HttpClientMock;
 
 @SpringBootTest
-public class HttpUtilsTest {
+class HttpUtilsTest {
 
 	@Autowired
 	private HttpUtils httpUtils;
 
 	@Test
-	public void mustGetResponseFromViaCepWebService() throws IOException, InterruptedException {
+	void mustGetResponseFromViaCepWebService() throws IOException, InterruptedException {
 
 		// given
 		var validJsonResponse = "{\"cep\": \"14020-525\", \"logradouro\": \"Avenida Presidente Vargas\", \"complemento\": \"de 1701 a 2399 - lado ímpar\", \"bairro\": \"Jardim Santa Ângela\", \"localidade\": \"Ribeirão Preto\", \"uf\": \"SP\", \"ibge\": \"3543402\", \"gia\": \"5824\", \"ddd\": \"16\"}";
