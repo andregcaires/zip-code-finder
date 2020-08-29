@@ -6,9 +6,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.andregcaires.zipcodefinder.core.dtos.AddressDto;
@@ -17,6 +20,7 @@ import com.andregcaires.zipcodefinder.core.dtos.ResultDto;
 import com.andregcaires.zipcodefinder.core.services.ZipCodeFinderService;
 
 @WebMvcTest(ZipCodeResource.class)
+@AutoConfigureMockMvc
 class ZipCodeResourceTest {
 
     @Autowired
@@ -37,6 +41,7 @@ class ZipCodeResourceTest {
     }
     
     @Test
+    @WithMockUser(username="admin",roles={"ADMIN"})
     void mustFindValidAddress() throws Exception {
     	
     	AddressDto address = mockAddress();    	
@@ -51,6 +56,7 @@ class ZipCodeResourceTest {
     }
     
     @Test
+    @WithMockUser(username="admin",roles={"ADMIN"})
     void mustReturnErrorMessageFromService() throws Exception {
     	
     	ErrorDto errorDto = new ErrorDto("CEP inválido");   	
