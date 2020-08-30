@@ -10,6 +10,9 @@ import com.andregcaires.zipcodefinder.context.repositories.AddressQueryRepositor
 import com.andregcaires.zipcodefinder.core.dtos.AddressDto;
 import com.andregcaires.zipcodefinder.domain.services.ZipCode;
 
+/*
+ * Class implementing the findAddressBySource method, by database
+ * */
 @Service
 @Qualifier("database")
 public class ZipCodeFinderServiceByDatabaseImpl extends ZipCodeFinderServiceTemplate implements ZipCodeFinderService {
@@ -24,14 +27,10 @@ public class ZipCodeFinderServiceByDatabaseImpl extends ZipCodeFinderServiceTemp
 
 		var address = addressQueryRepository.findByZipCode(zipCode.toString());
 
-		if (address == null) {
-
-			zipCode.updateCharacterWithZerosByLastIndex(super.index);
-
-		} else {
+		if (address != null) {
 
 			logger.info("An address has been found at database: {}", address.toString());
-
+			
 			result.setAddress(new AddressDto(address));
 		}
 	}

@@ -14,18 +14,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private BCryptPasswordEncoder _bCryptEncoder;
-	
+
+	/*
+	 * Mocked class to find user by it's name. In order to be fully functional,
+	 * instead of mocking an user, it should be searching at a proper database
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		UserDetailsImpl mockUser = null;
-		
+
 		if (!username.toLowerCase().equals("admin")) {
 			throw new UsernameNotFoundException(username);
 		}
-		
+
 		mockUser = new UserDetailsImpl("admin", _bCryptEncoder.encode("admin"));
-		
+
 		return mockUser;
 	}
 

@@ -14,7 +14,7 @@ public class AddressQueryRepositoryImpl implements AddressQueryRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	public Address findByZipCode(String zipCode) {
-		return jdbcTemplate.queryForObject("select * from student where id=?", new Object[] { zipCode },
+		return jdbcTemplate.queryForObject("select * from address where zipcode=?", new Object[] { zipCode },
 				new BeanPropertyRowMapper<Address>(Address.class));
 	}
 }

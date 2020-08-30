@@ -7,21 +7,27 @@ import com.andregcaires.zipcodefinder.core.dtos.ErrorDto;
 import com.andregcaires.zipcodefinder.core.dtos.ResultDto;
 import com.andregcaires.zipcodefinder.domain.services.ZipCode;
 
+/*
+ * Class that is based in the Template Method design pattern. 
+ * Provides a method findAddressByZipCode which calls the abstract method 
+ * findAddressBySource, that must be implemented containing the logic to try to 
+ * find the address and insert it in the ResultDto.AddressDto property 
+ * */
 public abstract class ZipCodeFinderServiceTemplate {
-	
+
 	protected ResultDto result;
-	
+
 	protected int index;
-	
+
 	Logger logger = LoggerFactory.getLogger(ZipCodeFinderServiceTemplate.class);
-	
+
 	abstract void findAddressBySource(ZipCode zipCode) throws Exception;
 
 	// this method is not 'final' due to Mockito's limitations
 	public ResultDto findAddressByZipCode(String zipCodeString) {
 
 		result = new ResultDto();
-		
+
 		var zipCode = ZipCode.createNewZipCode(zipCodeString);
 
 		if (zipCode.isValid()) {
@@ -40,13 +46,14 @@ public abstract class ZipCodeFinderServiceTemplate {
 
 					} else {
 
+						zipCode.updateCharacterWithZerosByLastIndex(index);
 						index++;
 					}
 
 				} catch (Exception e) {
 
 					logger.error("An error has ocurred when searching for Zip Code: {} - {}", zipCode, e.getMessage());
-
+					zipCode.updateCharacterWithZerosByLastIndex(index);
 					index++;
 				}
 

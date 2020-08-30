@@ -12,18 +12,24 @@ public class ZipCode {
 
 		this.current = new StringBuilder(zipCode == null ? "" : zipCode);
 	}
-	
+
+	/*
+	 * Create and validate a ZipCode object, which has a boolean property named
+	 * "valid", that indicates if the ZipCode is a valid one without throwing any
+	 * exception
+	 */
 	public static ZipCode createNewZipCode(String zipCode) {
-		
-		return new ZipCode(zipCode)
-				.validate();
+
+		return new ZipCode(zipCode).validate();
 	}
 
+	// updates character to '0' starting from the right
 	public void updateCharacterWithZerosByLastIndex(int indexFromRight) {
 
 		this.current.replace((ZIPCODELENGTH - indexFromRight) - 1, ZIPCODELENGTH - indexFromRight, "0");
 	}
 
+	// removes '-' from string and checks for valid length and if is numeric
 	private ZipCode validate() {
 
 		this.removeDash();
@@ -31,24 +37,26 @@ public class ZipCode {
 		if (this.current.length() == ZIPCODELENGTH && this.isNumeric()) {
 
 			this.valid = true;
-			
+
 		} else {
 
 			this.valid = false;
-			
+
 		}
 
 		return this;
 	}
 
+	// returns the current zip code as string, in order to keep the String Builder
+	// immutable outside of the domain object
 	@Override
 	public String toString() {
 
 		return this.current.toString();
 	}
-	
+
 	public boolean isValid() {
-		
+
 		return this.valid;
 	}
 

@@ -39,7 +39,7 @@ public class ZipCodeResource {
 	@GetMapping(value = {"/{zipCode}/database"}, produces = "application/json")
 	public ResponseEntity<String> findByDatabase(@PathVariable String zipCode) throws JsonProcessingException {
 		
-		var body = zipCodeFinderServiceByViaCep.findAddressByZipCode(zipCode);
+		var body = zipCodeFinderServiceByDatabase.findAddressByZipCode(zipCode);
 		
 		if (body.getError() != null) {
 			

@@ -12,6 +12,9 @@ import com.andregcaires.zipcodefinder.domain.services.ZipCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/*
+ * Class implementing the findAddressBySource method, by the ViaCep's web service 
+ * */
 @Service
 @Qualifier("viaCep")
 public class ZipCodeFinderServiceByViaCepImpl extends ZipCodeFinderServiceTemplate implements ZipCodeFinderService {
@@ -25,15 +28,11 @@ public class ZipCodeFinderServiceByViaCepImpl extends ZipCodeFinderServiceTempla
 
 		var responseBody = httpUtils.httpGetViaCep(zipCode.toString());
 
-		if (!isValidZipCodeResponse(responseBody)) {
-
-			zipCode.updateCharacterWithZerosByLastIndex(super.index);
-
-		} else {
+		if (isValidZipCodeResponse(responseBody)) {
 
 			logger.info("An address has been found at ViaCep: {}", responseBody);
-
-			result.setAddress(serializeJsonStringIntoAddress(responseBody));
+			
+			result.setAddress(serializeJsonStringIntoAddress(responseBody));			
 		}
 	}
 
