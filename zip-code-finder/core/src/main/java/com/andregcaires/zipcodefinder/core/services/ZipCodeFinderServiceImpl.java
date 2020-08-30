@@ -6,83 +6,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.andregcaires.zipcodefinder.core.dtos.AddressDto;
-import com.andregcaires.zipcodefinder.core.dtos.ErrorDto;
-import com.andregcaires.zipcodefinder.core.dtos.ResultDto;
 import com.andregcaires.zipcodefinder.core.utils.HttpUtils;
 import com.andregcaires.zipcodefinder.domain.services.ZipCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class ZipCodeFinderServiceImpl implements ZipCodeFinderService {
+public class ZipCodeFinderServiceImpl extends ZipCodeFinderServiceTemplate implements ZipCodeFinderService {
 
 	Logger logger = LoggerFactory.getLogger(ZipCodeFinderServiceImpl.class);
-	
+
 	@Autowired
 	private HttpUtils httpUtils;
 
-	public ResultDto findAddressByZipCode(String zipCodeString) {
+	public void findAddressBySource(ZipCode zipCode) throws Exception {
 
-		var zipCode = ZipCode.createNewZipCode(zipCodeString);
+		var responseBody = httpUtils.httpGetViaCep(zipCode.toString());
 
-		var result = new ResultDto();
+		if (!isValidZipCodeResponse(responseBody)) {
 
-		if (zipCode.isValid()) {
+			zipCode.updateCharacterWithZerosByLastIndex(super.index);
 
-			int index = 0;
-			String responseBody;
-
-			while (index != ZipCode.ZIPCODELENGTH) {
-
-				try {
-
-					responseBody = httpUtils.httpGetViaCep(zipCode.toString());
-
-					if (!isValidZipCodeResponse(responseBody)) {
-
-						zipCode.updateCharacterWithZerosByLastIndex(index);
-						index++;
-
-					} else {
-
-						logger.info("An address has been found: {}", responseBody);
-
-						result.setAddress(serializeJsonStringIntoAddress(responseBody));
-						
-						break;
-					}
-
-				} catch (Exception e) {
-
-					logger.error("An error has ocurred when searching for Zip Code: {} - {}", zipCode,
-							e.getMessage());
-
-					index++;
-				}
-
-			}
-
-			if (index == ZipCode.ZIPCODELENGTH) {
-
-				result.setError(new ErrorDto("CEP inválido"));
-			}
-			
 		} else {
-			
-			result.setError(new ErrorDto("CEP inválido"));
-		}
 
-		return result;
+			logger.info("An address has been found at ViaCep: {}", responseBody);
+
+			result.setAddress(serializeJsonStringIntoAddress(responseBody));
+		}
 	}
+
 
 	public boolean isValidZipCodeResponse(String responseBody) {
-		
-		return responseBody.contains("localidade") && responseBody.contains("logradouro") && responseBody.contains("bairro")
-				&& responseBody.contains("uf");
+
+		return responseBody.contains("localidade") && responseBody.contains("logradouro")
+				&& responseBody.contains("bairro") && responseBody.contains("uf");
 	}
 
-	public AddressDto serializeJsonStringIntoAddress(String jsonString)
-			throws JsonProcessingException {
+	public AddressDto serializeJsonStringIntoAddress(String jsonString) throws JsonProcessingException {
 
 		return new ObjectMapper().readValue(jsonString, AddressDto.class);
 	}
