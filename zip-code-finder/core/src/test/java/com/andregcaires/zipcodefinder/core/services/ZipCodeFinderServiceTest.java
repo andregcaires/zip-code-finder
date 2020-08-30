@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 class ZipCodeFinderServiceTest {
 
 	@Autowired
-	private ZipCodeFinderServiceImpl zipCodeFinderService;
+	private ZipCodeFinderServiceByViaCepImpl zipCodeFinderByViaCepService;
 	
 	@MockBean
 	private HttpUtils httpUtils;
@@ -32,7 +32,7 @@ class ZipCodeFinderServiceTest {
 		given(httpUtils.httpGetViaCep("14020525")).willReturn(validJsonResponse);
 		
 		// when
-		var result = zipCodeFinderService.findAddressByZipCode("14020525");
+		var result = zipCodeFinderByViaCepService.findAddressByZipCode("14020525");
 		
 		// then
 		AddressDto address = result.getAddress();
@@ -52,7 +52,7 @@ class ZipCodeFinderServiceTest {
 		given(httpUtils.httpGetViaCep("ABC")).willReturn(invalidJsonResponse);
 		
 		// when
-		var result = zipCodeFinderService.findAddressByZipCode("ABC");
+		var result = zipCodeFinderByViaCepService.findAddressByZipCode("ABC");
 		
 		// then
 		Assertions.assertNotNull(result.getError());
@@ -75,7 +75,7 @@ class ZipCodeFinderServiceTest {
 		given(httpUtils.httpGetViaCep("00000000")).willReturn(invalidJsonResponse);
 		
 		// when
-		var result = zipCodeFinderService.findAddressByZipCode("12345678");
+		var result = zipCodeFinderByViaCepService.findAddressByZipCode("12345678");
 		
 		// then
 		Assertions.assertNotNull(result.getError());
@@ -90,8 +90,8 @@ class ZipCodeFinderServiceTest {
 		var invalidJsonResponse = "{\"erro\": true}";
 		
 		// when
-		var mustBeTrue = zipCodeFinderService.isValidZipCodeResponse(validJsonResponse);
-		var mustBeFalse = zipCodeFinderService.isValidZipCodeResponse(invalidJsonResponse);
+		var mustBeTrue = zipCodeFinderByViaCepService.isValidZipCodeResponse(validJsonResponse);
+		var mustBeFalse = zipCodeFinderByViaCepService.isValidZipCodeResponse(invalidJsonResponse);
 		
 		// then
 		Assertions.assertTrue(mustBeTrue);
@@ -106,7 +106,7 @@ class ZipCodeFinderServiceTest {
 		AddressDto address = null;
 		
 		// when
-		address = zipCodeFinderService.serializeJsonStringIntoAddress(validJsonResponse);
+		address = zipCodeFinderByViaCepService.serializeJsonStringIntoAddress(validJsonResponse);
 		
 		// then
 		Assertions.assertNotNull(address);

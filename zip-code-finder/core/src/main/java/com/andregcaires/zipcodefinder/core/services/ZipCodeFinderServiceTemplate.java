@@ -17,7 +17,8 @@ public abstract class ZipCodeFinderServiceTemplate {
 	
 	abstract void findAddressBySource(ZipCode zipCode) throws Exception;
 
-	public final ResultDto findAddressByZipCode(String zipCodeString) {
+	// this method is not 'final' due to Mockito's limitations
+	public ResultDto findAddressByZipCode(String zipCodeString) {
 
 		result = new ResultDto();
 		

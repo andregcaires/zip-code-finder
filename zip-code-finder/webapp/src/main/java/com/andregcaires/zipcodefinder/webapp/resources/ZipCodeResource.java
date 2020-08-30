@@ -1,6 +1,7 @@
 package com.andregcaires.zipcodefinder.webapp.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class ZipCodeResource {
 
 	@Autowired
+	@Qualifier("viaCep")
 	private ZipCodeFinderService zipCodeFinderService;
 	
 	@GetMapping(value = {"/{zipCode}/viacep"}, produces = "application/json")
