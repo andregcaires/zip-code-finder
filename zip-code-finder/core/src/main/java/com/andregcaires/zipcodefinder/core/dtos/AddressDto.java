@@ -1,13 +1,18 @@
 package com.andregcaires.zipcodefinder.core.dtos;
 
+import com.andregcaires.zipcodefinder.domain.entities.Address;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressDto extends BaseDto {
+	
+	@JsonProperty("cep")
+	private String zipCode;
 	
 	@JsonProperty("uf")
 	private String state;
@@ -20,6 +25,40 @@ public class AddressDto extends BaseDto {
 	
 	@JsonProperty("logradouro")
 	private String street;
+	
+	public AddressDto() {
+		
+	}
+	
+	public AddressDto(Address address) {
+		super();
+		this.state = address.getState();
+		this.city = address.getCity();
+		this.neighborhood = address.getNeighborhood();
+		this.street = address.getStreet();
+	}
+	
+	public Address toEntity() {
+		
+		Address address = new Address();
+		
+		address.setCity(city);
+		address.setNeighborhood(neighborhood);
+		address.setState(state);
+		address.setStreet(street);
+		address.setZipCode(zipCode);
+		
+		return address;
+	}
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
 
 	public String getState() {
 		return state;

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.andregcaires.zipcodefinder.core.dtos.AddressDto;
 import com.andregcaires.zipcodefinder.core.utils.HttpUtils;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 @SpringBootTest
+@ContextConfiguration
 class ZipCodeFinderServiceTest {
 
 	@Autowired

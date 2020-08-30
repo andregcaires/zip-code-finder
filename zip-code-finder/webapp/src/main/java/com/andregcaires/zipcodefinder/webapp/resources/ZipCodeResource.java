@@ -17,12 +17,29 @@ public class ZipCodeResource {
 
 	@Autowired
 	@Qualifier("viaCep")
-	private ZipCodeFinderService zipCodeFinderService;
+	private ZipCodeFinderService zipCodeFinderServiceByViaCep;
+	
+	@Autowired
+	@Qualifier("database")
+	private ZipCodeFinderService zipCodeFinderServiceByDatabase;
 	
 	@GetMapping(value = {"/{zipCode}/viacep"}, produces = "application/json")
 	public ResponseEntity<String> findByZipCode(@PathVariable String zipCode) throws JsonProcessingException {
 		
-		var body = zipCodeFinderService.findAddressByZipCode(zipCode);
+		var body = zipCodeFinderServiceByViaCep.findAddressByZipCode(zipCode);
+		
+		if (body.getError() != null) {
+			
+			return ResponseEntity.badRequest().body(body.getError().toJson());
+		}
+		
+		return ResponseEntity.ok().body(body.getAddress().toJson());
+	}
+	
+	@GetMapping(value = {"/{zipCode}/database"}, produces = "application/json")
+	public ResponseEntity<String> findByDatabase(@PathVariable String zipCode) throws JsonProcessingException {
+		
+		var body = zipCodeFinderServiceByViaCep.findAddressByZipCode(zipCode);
 		
 		if (body.getError() != null) {
 			

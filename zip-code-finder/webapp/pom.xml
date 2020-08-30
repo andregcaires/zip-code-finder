@@ -34,6 +34,16 @@
 			<artifactId>core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.andregcaires.zipcodefinder</groupId>
+			<artifactId>context</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		
 		<dependency>
 		    <groupId>javax.xml.bind</groupId>

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Service;
 public interface HttpUtils {
 
 	String httpGetViaCep(String zipCode) throws IOException, InterruptedException;
+	String httpGetViaCepForPopulateDatabase() throws IOException, InterruptedException;
 }

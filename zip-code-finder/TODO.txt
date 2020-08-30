@@ -9,10 +9,6 @@ Spring Cucumber
 
 TODO:
 
-- AUTENTICAÇÃO
-
-- Sonar
-
 - Métricas
 https://docs.spring.io/spring-metrics/docs/current/public/prometheus
 
@@ -22,4 +18,7 @@ https://docs.spring.io/spring-metrics/docs/current/public/prometheus
 
 - Projeto com banco
 
+
+
+https://viacep.com.br/ws/SP/Sao%20Paulo/Ribeirao%20Preto/json/
 
