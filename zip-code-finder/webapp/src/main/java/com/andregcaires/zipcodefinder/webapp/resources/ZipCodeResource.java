@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.andregcaires.zipcodefinder.core.services.ZipCodeFinderService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value = {"/zipcode"})
 public class ZipCodeResource {
@@ -23,6 +27,11 @@ public class ZipCodeResource {
 	@Qualifier("database")
 	private ZipCodeFinderService zipCodeFinderServiceByDatabase;
 	
+	@ApiOperation(value = "Busca um endereço através do CEP no web service Via Cep")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Retorna um endereço quando encontrado"),
+	    @ApiResponse(code = 400, message = "CEP inválido"),
+	})
 	@GetMapping(value = {"/{zipCode}/viacep"}, produces = "application/json")
 	public ResponseEntity<String> findByZipCode(@PathVariable String zipCode) throws JsonProcessingException {
 		
@@ -36,6 +45,11 @@ public class ZipCodeResource {
 		return ResponseEntity.ok().body(body.getAddress().toJson());
 	}
 	
+	@ApiOperation(value = "Busca um endereço através do CEP no banco de dados")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Retorna um endereço quando encontrado"),
+	    @ApiResponse(code = 400, message = "CEP inválido"),
+	})
 	@GetMapping(value = {"/{zipCode}/database"}, produces = "application/json")
 	public ResponseEntity<String> findByDatabase(@PathVariable String zipCode) throws JsonProcessingException {
 		

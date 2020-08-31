@@ -36,6 +36,9 @@ public class AddressDto extends BaseDto {
 		this.city = address.getCity();
 		this.neighborhood = address.getNeighborhood();
 		this.street = address.getStreet();
+		var zipCode = address.getZipCode();
+		this.zipCode = zipCode.substring(0, 5) + "-" + zipCode.substring(5, 8);
+		
 	}
 	
 	public Address toEntity() {
@@ -51,7 +54,6 @@ public class AddressDto extends BaseDto {
 		return address;
 	}
 	
-	@JsonProperty(access = Access.WRITE_ONLY)
 	public String getZipCode() {
 		return zipCode;
 	}

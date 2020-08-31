@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EntityScan(basePackages = { "com.andregcaires.zipcodefinder.domain.entities" })
-@EnableJpaRepositories
 public class ContextApplication {
 
 }

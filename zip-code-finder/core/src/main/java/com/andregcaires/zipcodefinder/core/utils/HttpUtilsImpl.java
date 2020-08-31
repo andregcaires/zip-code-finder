@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class HttpUtilsImpl implements HttpUtils {
 	
 	private static final String VIACEPURL = "https://viacep.com.br/ws/%s/json/";
-	private static final String VIACEPCITYURL = "https://viacep.com.br/ws/SP/Sao%20Paulo/Ribeirao%20Preto/json/";
+	private static final String VIACEPMOCKURL = "https://viacep.com.br/ws/SP/Sao%20Paulo/Ribeirao%20Preto/json/";
 
 	public String httpGetViaCep(String zipCode) throws IOException, InterruptedException {
 
@@ -31,7 +31,7 @@ public class HttpUtilsImpl implements HttpUtils {
 
 		var httpClient = HttpClient.newHttpClient();
 		
-		var request = HttpRequest.newBuilder().uri(URI.create(VIACEPCITYURL)).build();
+		var request = HttpRequest.newBuilder().uri(URI.create(VIACEPMOCKURL)).build();
 
 		var response = httpClient.send(request, BodyHandlers.ofString());
 
