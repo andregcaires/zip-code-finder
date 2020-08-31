@@ -27,6 +27,8 @@ Projeto desenvolvido em Java 11, que realiza consultas por endereços através d
 
 Existe uma arquivo README para cada módulo, contendo informações sobre sua implementação
 
+No arquivo application.properties do módulo webapp existe a propriedade indicando o endereço da pasta de logs
+
 ## Testes
 
 Para cobertura de testes, foi utilizada a ferramenta [EclEmma](https://www.eclemma.org/)
